@@ -1,0 +1,10 @@
+<!-- Starts up everything needed to run the example listener/talker Python nodes. -->
+
+<launch>
+  <node pkg="erlang_bridge" type="init_epmd.sh" name="erlang_init">
+    <param name="rate" value="10"/>
+  </node>
+  <node pkg="erlang_bridge" type="bridge.py" name="erlang_bridge">
+    <param name="rate" value="10"/>
+  </node>
+</launch>

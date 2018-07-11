@@ -1,0 +1,3 @@
+[submodule "Pyrlang"]
+	path = Pyrlang
+	url = https://github.com/esl/Pyrlang
