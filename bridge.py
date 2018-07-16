@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import gevent
 from gevent import monkey
 monkey.patch_all()
@@ -6,6 +6,7 @@ import Pyrlang
 from Pyrlang import Atom, Process
 import rospy
 from std_msgs.msg import String, Int16, Bool, Float32
+from geometry_msgs.msg import Vector3
 bp = None
 registeredListeners={}
 registeredPublishers={}
@@ -15,6 +16,9 @@ def callback(msg, topic):
     global bp
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)
     bp.sendString(topic, msg.data)
+def callback_vector3(msg, topic):
+    global bp
+    bp.sendString(topic, (msg.x, msg.y, msg.z))
     
 def listener():
     # In ROS, nodes are uniquely named. If two nodes with the same
@@ -51,6 +55,8 @@ class MyProcess(Process):
                     sub=rospy.Subscriber(topic, String, callback, topic)
                 elif msgType == Atom('int16'):
                     sub=rospy.Subscriber(topic, Int16, callback, topic)
+                elif msgType == Atom('vector3'):
+                    sub=rospy.Subscriber(topic, Vector3, callback_vector3, topic)
                 else:
                     self._node.send(sender=self.pid_, receiver=remotePid, message=(self.pid_, (Atom('err'), Atom('unknown_message_type'), msgType)))
                     return
