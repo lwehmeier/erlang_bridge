@@ -97,9 +97,9 @@ class MyProcess(Process):
             self._node.send(sender=self.pid_, receiver=remotePid, message=(self.pid_, (Atom('err'), Atom('invalid_request'))))
 
     def sendString(self, topic, data):
-        self._node.send(sender=self.pid_, receiver=(Atom('erl@x1'), Atom('erlBridge')), message=(self.pid_, (Atom('push'), topic, data)))
+        self._node.send(sender=self.pid_, receiver=(Atom('erl@rpi3'), Atom('erlBridge')), message=(self.pid_, (Atom('push'), topic, data)))
     def sendTest(self):
-        self._node.send(sender=self.pid_, receiver=(Atom('erl@x1'), Atom('erlBridge')), message=(self.pid_, (Atom('acc'), (42, 43, 44))))
+        self._node.send(sender=self.pid_, receiver=(Atom('erl@rpi3'), Atom('erlBridge')), message=(self.pid_, (Atom('acc'), (42, 43, 44))))
 
 
 def main():
