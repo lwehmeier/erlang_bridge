@@ -8,6 +8,7 @@ import rospy
 from std_msgs.msg import String, Int16, Bool, Float32
 from geometry_msgs.msg import Vector3
 bp = None
+global registeredPublishers
 registeredListeners={}
 registeredPublishers={}
 
@@ -38,6 +39,7 @@ class MyProcess(Process):
         print("registering process - 'pyBridge'")
 
     def handle_one_inbox_message(self, msg):
+        global registeredPublishers
         print("Incoming", msg)
         remotePid = msg[0]
         action = msg[1]
