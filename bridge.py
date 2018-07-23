@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import gevent
 from gevent import monkey
 monkey.patch_all()
@@ -40,7 +40,7 @@ class MyProcess(Process):
 
     def handle_one_inbox_message(self, msg):
         global registeredPublishers
-        print("Incoming", msg)
+        #print("Incoming", msg)
         remotePid = msg[0]
         action = msg[1]
         if action == Atom('stop'):
@@ -63,8 +63,8 @@ class MyProcess(Process):
                     self._node.send(sender=self.pid_, receiver=remotePid, message=(self.pid_, (Atom('err'), Atom('unknown_message_type'), msgType)))
                     return
                 registeredListeners[topic+"__"+str(msgType)]=sub
-                print(self.pid_)
-                print(remotePid)
+                #print(self.pid_)
+                #print(remotePid)
                 self._node.send(sender=self.pid_, receiver=remotePid, message=(self.pid_, (Atom('ok'), topic)))
         elif action == Atom('publish'):
             data=msg[4]
